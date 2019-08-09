@@ -3,7 +3,7 @@ FROM php:7.1.31-cli-alpine3.10
 ENV SWOOLE_VERSION 4.4.3
 
 RUN echo "https://mirrors.aliyun.com/alpine/v3.8/main/" > /etc/apk/repositories \
-    && apk --update add tar gzip curl wget g++ gcc zip unzip make autoconf openssl-dev libpng libpng-dev \
+    && apk --update add tar gzip curl wget g++ gcc zip unzip make autoconf openssl-dev libpng libpng-dev openssh-client \
     && wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
     && docker-php-ext-install gd zip mbstring bcmath calendar fileinfo \
     && mkdir -p swoole \
