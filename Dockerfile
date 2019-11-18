@@ -21,7 +21,6 @@ RUN echo "https://mirrors.aliyun.com/alpine/v3.10/main/" > /etc/apk/repositories
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer \
     && composer self-update --clean-backups \
-    && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ \
     && composer global require phpmd/phpmd --no-suggest --no-ansi --no-interaction \
     && ln -s /srv/vendor/bin/phpmd /usr/local/bin/phpmd \
     && mkdir -p /root/.ssh \
