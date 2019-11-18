@@ -1,11 +1,11 @@
-FROM php:7.3.11-cli-alpine
+FROM php:7.1.31-cli-alpine3.10
 
-ENV SWOOLE_VERSION 4.4.12
+ENV SWOOLE_VERSION 4.4.3
 
-RUN echo "https://mirrors.aliyun.com/alpine/edge/main/" >> /etc/apk/repositories \
-    && apk --update add git tar gzip curl wget g++ gcc zip make autoconf openssl-dev libpng libpng-dev openssh-client \
+RUN echo "https://mirrors.aliyun.com/alpine/v3.8/main/" > /etc/apk/repositories \
+    && apk --update add git tar gzip curl wget g++ gcc zip unzip make autoconf openssl-dev libpng libpng-dev openssh-client \
     && wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
-    && docker-php-ext-install gd mbstring bcmath calendar fileinfo \
+    && docker-php-ext-install gd zip mbstring bcmath calendar fileinfo \
     && mkdir -p swoole \
     && tar -xf swoole.tar.gz -C swoole --strip-components=1 \
     && rm swoole.tar.gz \
