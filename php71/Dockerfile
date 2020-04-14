@@ -1,6 +1,6 @@
 FROM php:7.1.31-cli-alpine3.10
 
-ENV SWOOLE_VERSION 4.4.12
+ENV SWOOLE_VERSION 4.4.17
 
 RUN echo "https://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories \
     && echo "https://mirrors.aliyun.com/alpine/edge/community/" >> /etc/apk/repositories \
