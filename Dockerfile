@@ -27,4 +27,9 @@ RUN echo "https://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repo
     && /usr/local/bin/composer global require phpmd/phpmd --no-suggest --no-ansi --no-interaction \
     && ln -s /srv/vendor/bin/phpmd /usr/local/bin/phpmd \
     && mkdir -p /root/.ssh \
-    && rm -r swoole
+    && rm -r swoole \
+    && curl -L -o /tmp/reids.tar.gz https://github.com/phpredis/phpredis/archive/5.2.1.tar.gz \
+    && cd /tmp && tar -xzf reids.tar.gz \
+    && docker-php-source extract \
+    && mv phpredis-5.2.1 /usr/src/php/ext/phpredis \
+    && docker-php-ext-install phpredis
