@@ -1,15 +1,13 @@
-FROM php:7.3.23-cli-alpine3.12
+FROM php:8.0-rc-cli-alpine3.12
 
 ENV SWOOLE_VERSION 4.5.6
 
 RUN echo "https://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories \
     && echo "https://mirrors.aliyun.com/alpine/edge/community/" >> /etc/apk/repositories \
-    && apk --update add git yarn tar gzip curl git wget g++ gcc zip make autoconf openssl-dev libzip libzip-dev libpng libpng-dev openssh-client oniguruma-dev \
+    && apk --update add git tar gzip curl wget git g++ gcc zip unzip make autoconf openssl-dev libzip libzip-dev libpng libpng-dev openssh-client oniguruma-dev \
     && wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
-    && yarn --version \
-    && node --version \
     && docker-php-ext-configure zip \
-    && docker-php-ext-install zip gd mbstring bcmath calendar fileinfo \
+    && docker-php-ext-install gd zip mbstring bcmath calendar fileinfo \
     && mkdir -p swoole \
     && tar -xf swoole.tar.gz -C swoole --strip-components=1 \
     && rm swoole.tar.gz \
@@ -31,8 +29,8 @@ RUN echo "https://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repo
     && ln -s /srv/vendor/bin/phpmd /usr/local/bin/phpmd \
     && mkdir -p /root/.ssh \
     && rm -r swoole \
-    && curl -L -o /tmp/reids.tar.gz https://github.com/phpredis/phpredis/archive/5.2.1.tar.gz \
-    && cd /tmp && tar -xzf reids.tar.gz \
-    && docker-php-source extract \
-    && mv phpredis-5.2.1 /usr/src/php/ext/phpredis \
-    && docker-php-ext-install phpredis
+    # && curl -L -o /tmp/reids.tar.gz https://github.com/phpredis/phpredis/archive/5.2.1.tar.gz \
+    # && cd /tmp && tar -xzf reids.tar.gz \
+    # && docker-php-source extract \
+    # && mv phpredis-5.2.1 /usr/src/php/ext/phpredis \
+    # && docker-php-ext-install phpredis
