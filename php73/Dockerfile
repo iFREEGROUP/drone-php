@@ -1,10 +1,10 @@
-FROM php:7.3.11-cli-alpine
+FROM php:7.3.11-cli-alpine3.10
 
-ENV SWOOLE_VERSION 4.4.17
+ENV SWOOLE_VERSION 4.5.6
 
 RUN echo "https://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories \
     && echo "https://mirrors.aliyun.com/alpine/edge/community/" >> /etc/apk/repositories \
-    && apk --update add git tar gzip curl wget g++ gcc zip make autoconf openssl-dev libzip libzip-dev libpng libpng-dev openssh-client \
+    && apk --update add git tar gzip curl git wget g++ gcc zip make autoconf openssl-dev libzip libzip-dev libpng libpng-dev openssh-client \
     && wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz -O swoole.tar.gz \
     && docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-install zip gd mbstring bcmath calendar fileinfo \
@@ -20,8 +20,11 @@ RUN echo "https://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repo
     && make install \
     ) \
     && sed -i "2i extension=swoole.so" /usr/local/etc/php/php.ini \
+
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
+    && composer -V \
+
     && /usr/local/bin/composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ \
     && /usr/local/bin/composer self-update --clean-backups \
     && /usr/local/bin/composer global require phpmd/phpmd --no-suggest --no-ansi --no-interaction \
