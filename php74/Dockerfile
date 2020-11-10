@@ -1,4 +1,4 @@
-FROM php:7.4.11-cli-alpine3.12
+FROM php:7.4.12-cli-alpine3.12
 
 ENV SWOOLE_VERSION 4.5.6
 
